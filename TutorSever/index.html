@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <title>导师双向选择系统</title>
+  <style type="text/css">
+    .el-header {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bolder;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <el-container>
+      <el-header>
+        <h1>导师双向选择系统</h1>
+      </el-header>
+      <el-main>
+        <el-card style="background-color: #fafafa;" shadow="hover">
+          <el-form ref="login" status-icon :rules="rules" :model="login" label-width="80px">
+            <el-form-item label="账号" prop="username">
+              <el-input v-model="login.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input type="password" v-model="login.password" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="你是" prop="usergroup">
+              <el-radio-group v-model="login.usergroup" >
+                <el-radio style="background-color: white;" label="student" border>学生</el-radio>
+                <el-radio style="background-color: white;" label="teacher" border>教师</el-radio>
+                <el-radio style="background-color: white;" label="admin" border>管理员</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('login')">登陆</el-button>
+            </el-form-item>
+          </el-form>
+          <el-dialog :before-close="updatePassword" close-on-press-escape="false" close-on-click-modal="false" title="首次登陆，请修改密码" :visible.sync="login.firstlogin" width="30%">
+            <el-form :model="login" status-icon :rules="rules" ref="login">
+              <el-form-item label="新密码（需六位以上，包括数字和大、小写英文字母）" prop="newpassword">
+                <el-input prop="newpassword" type="password" v-model="login.newpassword" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="确认新密码" prop="checknewpsw">
+                <el-input prop="checknewpsw" type="password" v-model="login.checknewpsw" autocomplete="off"></el-input>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer" >
+              <el-button type="primary" @click="submitNewPsw('login')">确定</el-button>
+            </span>
+          </el-dialog>
+        </el-card>
+      </el-main>
+    </el-container>
+  </div>
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/login.js"></script>
+
+</html>
